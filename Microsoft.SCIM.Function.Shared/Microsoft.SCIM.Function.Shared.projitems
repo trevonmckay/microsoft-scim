@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>de14182f-d415-437e-9c2a-fc3570b3b780</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Microsoft.SCIM.Function.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Functions\Group\GroupConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Functions\Group\GroupFunctions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Functions\RootConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Functions\RootFunctions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Functions\TokenFunctions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Functions\User\UserConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Functions\User\UserFunctions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)host.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

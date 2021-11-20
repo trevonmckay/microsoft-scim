@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>Microsoft.SCIM</RootNamespace>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Service\HttpResponseExceptionFactory.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="SystemForCrossDomainIdentityManagementProtocolResources.Designer.cs">
+      <DependentUpon>SystemForCrossDomainIdentityManagementProtocolResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="SystemForCrossDomainIdentityManagementSchemasResources.Designer.cs">
+      <DependentUpon>SystemForCrossDomainIdentityManagementSchemasResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="SystemForCrossDomainIdentityManagementServiceResources.Designer.cs">
+      <DependentUpon>SystemForCrossDomainIdentityManagementServiceResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="SystemForCrossDomainIdentityManagementProtocolResources.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>SystemForCrossDomainIdentityManagementProtocolResources.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="SystemForCrossDomainIdentityManagementSchemasResources.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>SystemForCrossDomainIdentityManagementSchemasResources.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="SystemForCrossDomainIdentityManagementServiceResources.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>SystemForCrossDomainIdentityManagementServiceResources.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

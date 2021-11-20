@@ -1,0 +1,253 @@
+{
+	"info": {
+		"_postman_id": "f983f026-45f0-46de-88e8-4606a6e8d4a4",
+		"name": "Azure Functions OpenAPI Extension",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "scim/user",
+			"item": [
+				{
+					"name": "Gets valid User",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "code",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/scim/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"scim",
+								"user"
+							]
+						},
+						"description": "This gets valid User from AAD"
+					},
+					"response": [
+						{
+							"name": "The OK response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/scim/user?code=<API Key>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"scim",
+										"user"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "<API Key>"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "\"cupidatat ea exercitation\""
+						}
+					]
+				},
+				{
+					"name": "Posts valid User",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "code",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/scim/user/:resourceData",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"scim",
+								"user",
+								":resourceData"
+							],
+							"variable": [
+								{
+									"key": "resourceData"
+								}
+							]
+						},
+						"description": "This posts valid User from AAD"
+					},
+					"response": [
+						{
+							"name": "The OK response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/scim/user/:resourceData?code=<API Key>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"scim",
+										"user",
+										":resourceData"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "<API Key>"
+										}
+									],
+									"variable": [
+										{
+											"key": "resourceData"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "\"cupidatat ea exercitation\""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Gets valid Token",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "key",
+							"value": "code",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": true,
+							"type": "boolean"
+						},
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/token",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"token"
+					]
+				},
+				"description": "This gets valid token for authorization."
+			},
+			"response": [
+				{
+					"name": "It returns token: valid authorization token",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/token?code=<API Key>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"token"
+							],
+							"query": [
+								{
+									"key": "code",
+									"value": "<API Key>"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "\"cupidatat ea exercitation\""
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:7071/api",
+			"type": "string"
+		}
+	]
+}

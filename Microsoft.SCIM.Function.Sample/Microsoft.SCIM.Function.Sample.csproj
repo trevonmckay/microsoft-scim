@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<AzureFunctionsVersion>v3</AzureFunctionsVersion>
+		<_FunctionsSkipCleanOutput>true</_FunctionsSkipCleanOutput>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AzureExtensions.Swashbuckle" Version="3.3.2" />
+		<PackageReference Include="FluentValidation" Version="10.1.0" />
+		<PackageReference Include="MediatR" Version="9.0.0" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Azure.WebJobs.Extensions.OpenApi" Version="0.7.2-preview" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.15" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.15" />
+		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.6.0" />
+	
+		<PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.11" />	
+		<PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.12" />		
+		<PackageReference Include="Azure.Identity" Version="1.4.0" />
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.8.3" />
+		<PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
+		<PackageReference Include="Polly" Version="7.2.2" />
+		<PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Http.Polly" Version="3.1.15" />
+		<PackageReference Include="Serilog" Version="2.10.0" />
+		<PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
+		<PackageReference Include="Serilog.Sinks.AzureBlobStorage" Version="2.1.2" />
+		<PackageReference Include="Serilog.Sinks.AzureTableStorage" Version="5.0.0" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+		<PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
+		<PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Microsoft.SCIM.AspNet\Microsoft.SCIM.AspNet.csproj" />
+	  <ProjectReference Include="..\Microsoft.SCIM.Core\Microsoft.SCIM.Core.csproj" />
+	  <ProjectReference Include="..\Microsoft.SCIM.Function\Microsoft.SCIM.Function.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="host.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="local.settings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Never</CopyToPublishDirectory>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Resources\SystemForCrossDomainIdentityManagementServiceResources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>SystemForCrossDomainIdentityManagementServiceResources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\SystemForCrossDomainIdentityManagementServiceResources.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>SystemForCrossDomainIdentityManagementServiceResources.Designer.cs</LastGenOutput>
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	</ItemGroup>
+</Project>

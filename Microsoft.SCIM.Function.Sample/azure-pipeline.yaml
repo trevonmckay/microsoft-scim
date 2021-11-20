@@ -1,0 +1,137 @@
+﻿trigger:
+  batch: true
+  branches:
+    include:
+      - main
+      - feature/*
+      - release/*
+  paths:
+    include:
+      - Microsoft.SCIM.Serveless/*
+      #- src/[ProjectName.Test]/*
+    exclude:
+      - README.md
+
+pool:
+  vmImage: 'windows-2019'
+  demands:
+  - msbuild
+  - visualstudio
+  - vstest
+
+variables:
+- name: isDev
+  value: $[startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/')]
+
+- name: isMain
+  value: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+
+- name: isRelease
+  value: $[startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')]
+
+- name: deployTo
+  value: $[variables['Stages']]
+
+- name: restoreBuildProjects
+  value: "**/Microsoft.SCIM.Serveless.csproj"
+
+# - name: testProjects
+#   value: "**/[ProjectName].Tests.csproj"
+
+name: $(Date:yyyyMMdd)$(Rev:.r)
+stages:
+      - stage: build
+        displayName: Build
+        jobs:
+          - job: archive
+            displayName: Copy output files to staging directory
+            steps:
+              - task: CopyFiles@2
+                displayName:
+                inputs:
+                  SourceFolder: '$(Build.SourcesDirectory)/.deploy'
+                  Contents: |
+                    **/*.json
+                  TargetFolder: '$(Build.ArtifactStagingDirectory)/azuredeploy'
+                  CleanTargetFolder: true
+
+              - task: DotNetCoreCLI@2
+                displayName: Restore Microsoft.SCIM.Serveless
+                inputs:
+                  command: restore
+                  projects: '$(restoreBuildProjects)'
+                  vstsFeed: '9075c6dd-02f9-4638-8f9a-882eb9906f19'
+
+              - task: DotNetCoreCLI@2
+                displayName: Build Microsoft.SCIM.Serveless
+                inputs:
+                  projects: '$(restoreBuildProjects)'
+                  arguments: '--configuration $(BuildConfiguration)'
+
+              # - task: DotNetCoreCLI@2
+              #   displayName: Test
+              #   inputs:
+              #     command: test
+              #     arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
+              #     publishTestResults: true
+              #     testRunTitle: 'Unit tests'
+              #     projects: $(testProjects)
+              #     modifyOutputPath: true
+              #     nobuild: true
+              #     condition: and(succeeded(), eq(variables.isDev, true))
+              #   enabled: true
+
+              # - task: PublishCodeCoverageResults@1
+              #   displayName: 'Publish code coverage report'
+              #   inputs:
+              #     codeCoverageTool: 'Cobertura'
+              #     summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
+
+              - task: DotNetCoreCLI@2
+                displayName: Publish Microsoft.SCIM.Serveless
+                inputs:
+                  command: publish
+                  publishWebProjects: false
+                  projects: '$(restoreBuildProjects)'
+                  arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+                  zipAfterPublish: True
+
+              - task: PublishBuildArtifacts@1
+                displayName: 'Publish pipeline artifact'
+                inputs:
+                  PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+                  ArtifactName: 'Microsoft.SCIM.Serveless'
+                  Parallel: true
+
+              - publish: '$(Build.ArtifactStagingDirectory)/azuredeploy'
+                artifact: deploy
+
+      - stage: qa
+        displayName: QA
+        condition: or(eq(variables.isDev, true), contains(variables.deployTo, 'qa'))
+        jobs:
+          - template: /.azurepipeline/job/job-deploy.yaml
+            parameters:
+              azureSubscription: 'Enterprise Dev/Test (71b3523b-b691-49c2-8377-54f1b02bd5b9)'
+              resourceGroupName: 'scim'
+              environment: 'QA'
+              location: 'eastus2'
+              storageAccount: $(storageAccount)
+              package: $(Pipeline.Workspace)/**/Microsoft.SCIM.Serveless.zip            
+              appName: '$(appName)'
+
+     # Redefine production
+      # - stage: production
+      #   displayName: Prod
+      #   dependsOn: qa
+      #   jobs:
+      #     - template: /.azurepipeline/job/job-deploy.yaml
+      #       parameters:
+      #         azureSubscription: 'Enterprise Agreement (56526381-4213-4d3b-be8b-aee329a80aed)'
+      #         resourceGroupName: '[resource group name qa ]'
+      #         groupName: "[group name qa ]"
+      #         environment: 'production'
+      #         location: 'eastus2'
+      #         storageAccount: $(storageAccount)
+      #         package: $(Pipeline.Workspace)/**/[appName].zip
+      #         appName: '$(appName)'
